@@ -5,11 +5,17 @@ const program = require('commander');
 program.version(require('../package.json').version);
 
 const findTodos = require('../lib/findTodos');
+const findLongFunctions = require('../lib/findLongFunctions');
 
 program
 	.command('todos')
 	.description('Finds TODO or FIXME comments in your code base')
 	.action(findTodos);
+
+program
+	.command('functions')
+	.description('Finds functions that are too long')
+	.action(findLongFunctions);
 
 program
 	.command('*')
