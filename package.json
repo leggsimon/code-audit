@@ -1,5 +1,5 @@
 {
-  "name": "cqc",
+  "name": "code-audit",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "lint": "eslint -c .eslintrc.js ."
   },
   "bin": {
-    "cqc": "./bin/cqc.js"
+    "code-audit": "./bin/code-audit.js"
   },
   "keywords": [],
   "author": "",
