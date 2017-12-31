@@ -4,30 +4,25 @@ const program = require('commander');
 const shell = require('child_process');
 const { promisify } = require('util');
 const exec = promisify(shell.exec);
+const chalk = require('chalk');
 
 program.version(require('../package.json').version);
 
 const exit = err => {
-	console.log('\x1b[31m', err, '\x1b[0m');
+	console.log(chalk.red(err));
 	process.exit(1);
 };
 
 program
 	.command('todos')
 	.description('Finds TODO or FIXME comments in your code base')
-	// .option('-m, --multiregion', 'Will create an additional app in the US')
-	// .option('-o, --organisation [org]', 'Specify the organisation to own the created assets', DEFAULT_ORG)
-	.action(function (name, options) {
+	.action(() => {
 		const cwd = process.cwd();
-		const command = `grep --exclude-dir={node_modules,bower_components,build,public} -irnw '${cwd}' -e "TODO\\|FIXME"`;
-
-		// shell.exec(command, (error, stdout) => {
-		// 	console.log('\x1b[36m', stdout, '\x1b[0m')
-		// })
+		const command = `grep --exclude-dir={node_modules,bower_components,build,public,'.*'} --exclude='.*' -irnw '${cwd}' -e "TODO\\|FIXME"`;
 
 		exec(command)
 			.then(({stdout}) => {
-				const found = stdout
+				const grepFound = stdout
 					.split('\n')
 					.filter(n => n)
 					.map(line => {
@@ -61,18 +56,24 @@ program
 						}
 						return prev;
 					}, []);
-				console.log('\x1b[35m', JSON.stringify(found, null, 2), '\x1b[0m')
+
+				if (grepFound.length === 0) {
+					console.log(chalk.green('✓ No todos or fixmes found. Great job!'));
+					process.exit(0);
+				} else {
+					console.log(chalk.yellow(`${grepFound.length} todos or fixmes found`))
+				}
+
+				grepFound.forEach(({filename, relativeFilename, matches}) => {
+					matches.forEach(({lineNumber, line}) => {
+						console.log(
+							chalk.magenta(`${relativeFilename}:${lineNumber} `),
+							line
+						)
+					})
+				})
 			})
 			.catch(exit)
-
-		// `grep --exclude-dir={node_modules,bower_components,build,public} -irnw ${process.cwd()} -e "TODO\|FIXME"`
-		console.log(process.cwd())
-		console.log('finding todos')
-		// if (!name) {
-		// 	throw new Error('Please specify a name for the pipeline');
-		// }
-		// log.info(`Running drydock task with name: ${name}, org: ${options.organisation}, multiregion: ${options.multiregion}`);
-		// task(name, options).catch(utils.exit);
 	});
 
 program
