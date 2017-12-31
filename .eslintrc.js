@@ -24,7 +24,7 @@ module.exports = {
 		'no-unused-vars': 2,
 		'no-var': 2,
 		'one-var': [2, 'never'],
-		'quotes': [2, 'single'],
+		'quotes': [2, 'single', { "avoidEscape": true }],
 		'semi': [1, 'always'],
 		'space-before-function-paren': [2, 'always'],
 		'wrap-iife': 2
