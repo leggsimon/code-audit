@@ -18,7 +18,7 @@ program
 	.description('Finds TODO or FIXME comments in your code base')
 	.action(() => {
 		const cwd = process.cwd();
-		const command = `grep --exclude-dir={node_modules,bower_components,build,public,'.*'} --exclude={.*} -irnw '${cwd}' -e "TODO\\|FIXME" `;
+		const command = `grep --exclude-dir={node_modules,bower_components,build,public,'.*'} --exclude={'.*'} -irnw '${cwd}' -e "TODO\\|FIXME" `;
 
 		exec(command)
 			.catch((err) => {
@@ -31,6 +31,16 @@ program
 				const grepFound = stdout
 					.split('\n')
 					.filter(n => n)
+
+				if (grepFound.length === 0) {
+					console.log(chalk.green('✓ No todos or fixmes found. Great job!'));
+					process.exit(0);
+					return;
+				}
+
+				console.log(chalk.yellow(`${grepFound.length} todos or fixmes found`))
+
+				const matches = grepFound
 					.map(line => {
 						const [filename, lineNumber] = line.split(':', 2)
 
@@ -63,14 +73,7 @@ program
 						return prev;
 					}, []);
 
-				if (grepFound.length === 0) {
-					console.log(chalk.green('✓ No todos or fixmes found. Great job!'));
-					process.exit(0);
-				} else {
-					console.log(chalk.yellow(`${grepFound.length} todos or fixmes found`))
-				}
-
-				grepFound.forEach(({filename, relativeFilename, matches}) => {
+				matches.forEach(({filename, relativeFilename, matches}) => {
 					matches.forEach(({lineNumber, line}) => {
 						console.log(
 							chalk.magenta(`${relativeFilename}:${lineNumber} `),
