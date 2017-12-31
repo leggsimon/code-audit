@@ -5,13 +5,9 @@ const shell = require('child_process');
 const { promisify } = require('util');
 const exec = promisify(shell.exec);
 const chalk = require('chalk');
+const exitWithError = require('../lib/utils/exitWithError')
 
 program.version(require('../package.json').version);
-
-const exit = err => {
-	console.log(chalk.red(err));
-	process.exit(1);
-};
 
 program
 	.command('todos')
