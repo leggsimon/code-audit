@@ -18,9 +18,15 @@ program
 	.description('Finds TODO or FIXME comments in your code base')
 	.action(() => {
 		const cwd = process.cwd();
-		const command = `grep --exclude-dir={node_modules,bower_components,build,public,'.*'} --exclude='.*' -irnw '${cwd}' -e "TODO\\|FIXME"`;
+		const command = `grep --exclude-dir={node_modules,bower_components,build,public,'.*'} --exclude={.*} -irnw '${cwd}' -e "TODO\\|FIXME" `;
 
 		exec(command)
+			.catch((err) => {
+				if (Boolean(err.stderr)) {
+					throw Error(err)
+				}
+				return {stdout: err.stderr};
+			})
 			.then(({stdout}) => {
 				const grepFound = stdout
 					.split('\n')
