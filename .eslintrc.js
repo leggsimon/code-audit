@@ -13,6 +13,7 @@ module.exports = {
 	},
 	'rules': {
 		'eqeqeq': 2,
+		'arrow-parens': [2, 'as-needed'],
 		'guard-for-in': 2,
 		'new-cap': 0,
 		'no-caller': 2,

@@ -30,7 +30,7 @@ test('returns the variable declaration node for assigned anonymous functions', (
         const func = function () {};
         const arrow = () => {};`;
     const ast = acorn.parse(assignedAnonFunction);
-    const result = filter(ast, (node) =>
+    const result = filter(ast, node =>
         node.type === 'VariableDeclarator'
         && isATypeOfFunction(node.init)
     );
