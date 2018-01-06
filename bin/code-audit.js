@@ -6,6 +6,7 @@ program.version(require('../package.json').version);
 
 const findTodos = require('../lib/findTodos');
 const findLongFunctions = require('../lib/findLongFunctions');
+const findFunctionParameters = require('../lib/findFunctionParameters');
 const learn = require('../lib/learn');
 
 program
@@ -17,6 +18,11 @@ program
 	.command('functions')
 	.description('Finds functions that are too long')
 	.action(findLongFunctions);
+
+program
+	.command('parameters')
+	.description('Finds functions that are too long')
+	.action(findFunctionParameters);
 
 program
 	.command('learn')
