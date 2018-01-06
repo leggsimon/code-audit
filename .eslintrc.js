@@ -12,6 +12,7 @@ module.exports = {
 		}
 	},
 	'rules': {
+		'indent': [2, 'tab'],
 		'eqeqeq': 2,
 		'arrow-parens': [2, 'as-needed'],
 		'guard-for-in': 2,
