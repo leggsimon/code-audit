@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint -c .eslintrc.js ."
+    "test": "npm run unit-test && npm run lint",
+    "unit-test": "jest",
+    "lint": "eslint -c .eslintrc.js .",
+    "lint-fix": "eslint -c .eslintrc.js . --fix"
   },
   "bin": {
     "code-audit": "./bin/code-audit.js"
