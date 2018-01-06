@@ -40,3 +40,20 @@ test('returns the variable declaration node for assigned anonymous functions', (
     ).toBe(true);
 });
 
+test('returns function names or variable assignments', () => {
+    const functionVarsAndNames = `
+        const x = 1;
+        const functionVar1 = function () {};
+        const functionVar2 = () => {};
+        function functionNamed1 () {}
+        [].map(() => {})`;
+    const ast = acorn.parse(functionVarsAndNames);
+    const result = filter(ast, (node, parentNode) =>
+        (isATypeOfFunction(node) && parentNode.type !== 'VariableDeclarator')
+        || (node.type === 'VariableDeclarator' && isATypeOfFunction(node.init))
+    );
+    expect(result.length).toEqual(4);
+    const functions = result.map(node => (node.id && node.id.name) || undefined);
+    expect(functions).toEqual(['functionVar1', 'functionVar2', 'functionNamed1', undefined]);
+});
+
