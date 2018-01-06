@@ -6,6 +6,7 @@ program.version(require('../package.json').version);
 
 const findTodos = require('../lib/findTodos');
 const findLongFunctions = require('../lib/findLongFunctions');
+const learn = require('../lib/learn');
 
 program
 	.command('todos')
@@ -16,6 +17,12 @@ program
 	.command('functions')
 	.description('Finds functions that are too long')
 	.action(findLongFunctions);
+
+program
+	.command('learn')
+	.option('--no-open', 'Don\'t open the npm package page')
+	.description('Finds a random node module and opens the readme')
+	.action(learn);
 
 program
 	.command('*')
