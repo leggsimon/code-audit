@@ -5,6 +5,9 @@
 version: 2
 jobs:
   build:
+    filters:
+      tags:
+        only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
     docker:
       # specify the version you desire here
       - image: circleci/node:8
