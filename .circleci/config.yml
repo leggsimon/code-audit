@@ -34,7 +34,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: npm test && if [[ $CIRCLE_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] ; then npm-prepublish && printf "_auth = $NPM_AUTH_TOKEN\nemail = $NPM_EMAIL\n" > .npmrc && npm publish; fi
+      - run: npm test && if [[ $CIRCLE_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] ; then ./node_modules/.bin/npm-prepublish && printf "_auth = $NPM_AUTH_TOKEN\nemail = $NPM_EMAIL\n" > .npmrc && npm publish; fi
 
 workflows:
   version: 2
