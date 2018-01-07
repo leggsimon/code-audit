@@ -1,6 +1,6 @@
 {
   "name": "code-audit",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "eslint": "^4.14.0",
-    "jest": "^22.0.4"
+    "jest": "^22.0.4",
+    "npm-prepublish": "^1.2.3"
   }
 }
