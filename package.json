@@ -13,7 +13,7 @@
     "code-audit": "./bin/code-audit.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Simon Legg",
   "license": "ISC",
   "dependencies": {
     "acorn": "^5.3.0",
